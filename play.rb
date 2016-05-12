@@ -28,9 +28,20 @@ EM.run do
     p [:message, JSON.parse(event.data)]
     data = JSON.parse(event.data)
     if data['text'] == 'hi'
+      # hit rails endpoint using HTTP for image and text...
       ws.send({ type: 'message',
-        text: "Hello <@#{data['user']}> !",
+        text: "Hi, <@#{data['user']}>!",
         channel: data['channel'] }.to_json)
+    end
+    if data['subtype'] == 'channel_join'
+      ws.send({ type: 'message',
+        text: "Welcome to the <#{data['channel']}>, <@#{data['user']}>!",
+        channel: data['channel'] }.to_json)
+    end
+    if data['type'] == 'team_join'
+      ws.send({ type: 'message',
+        text: "Welcome to the team, <@#{data['user']['id']}>!",
+        channel: "C1872M3T7" }.to_json)
     end
   end
 
