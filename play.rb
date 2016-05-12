@@ -24,7 +24,6 @@ EM.run do
     p [:open]
   end
 
-
   ws.on :message do |event|
     p [:message, JSON.parse(event.data)]
     data = JSON.parse(event.data)
